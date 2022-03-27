@@ -1,6 +1,9 @@
+import time
 import pandas as pd
 from bid import *
 from create_agents import create_agents
+
+start = time.time()
 
 # Import Projects Database
 excel_projects = pd.read_excel('db.xlsx', sheet_name='Projects')
@@ -10,21 +13,21 @@ df_bid_details = pd.DataFrame()
 df_bid_results = pd.DataFrame()
 
 # Projects Parameters
-BID_ALPHA = 1  # Avg that represents amount of discount/overprice of projects
-STD_ALPHA = 0.1  # Standard deviation of BID_ALPHA (follows a normal distr.)
+BID_ALPHA = 0.9  # Avg that represents amount of discount/overprice of projects
+STD_ALPHA = 0.10  # Standard deviation of BID_ALPHA (follows a normal distr.)
 
 # Agents Parameters
-ATRAT_AVG = 2.5  # Avg Atratividade that the agents are normally distributed
+ATRAT_AVG = 2.50  # Avg Atratividade that the agents are normally distributed
 STD_DEV = 0.25  # Standard deviation of ATRAT_AVG
-NUMBER_OF_AGENTS = 35  # Total number of agents bidding
-MAX_ALPHA = 1.4  # Max value that agents are willing to go above fair bid price
-ATRAT_RANGE = 0.1
+NUMBER_OF_AGENTS = 25  # Total number of agents bidding
+MAX_ALPHA = 1.40  # Max value that agents are willing to go above fair bid price
+ATRAT_RANGE = 0.10
 
 # Governmennt Parameters
-REATIVIDADE = 0.1  # How much the government is willing to reduce bid price
+REATIVIDADE = 0  # How much the government is willing to reduce bid price
 
 # Iteration Parameters
-RUNS = 1000  # Number of iterations
+RUNS = 2000  # Number of iterations
 
 print('Alpha selecionado: {}'.format(BID_ALPHA))
 
@@ -60,12 +63,27 @@ for run in range(RUNS):
                       'projeto_outorga', 'agente_alpha_ofertado', 'bid',
                       'bid_number', 'reruns', 'run']])
 
+# Prepare the final databases
+FILE_NAME = '{}-{}-{}-{}-{}-{}-{}-{}-{}'.format(
+    BID_ALPHA, STD_ALPHA, ATRAT_AVG, STD_DEV, NUMBER_OF_AGENTS,
+    MAX_ALPHA, ATRAT_RANGE, REATIVIDADE, RUNS
+)
+print(FILE_NAME)
+columns = ['par_bid_alpha', 'par_std_alpha', 'par_atrat_avg', 'par_std_dev',
+           'par_number_of_agents', 'par_max_alpha', 'par_atrat_range', 'par_reatividade',
+           'par_runs', 'file_name']
+values = [BID_ALPHA, STD_ALPHA, ATRAT_AVG, STD_DEV, NUMBER_OF_AGENTS,
+          MAX_ALPHA, ATRAT_RANGE, REATIVIDADE, RUNS, FILE_NAME]
+
+df_bid_details[columns] = values
+df_bid_results[columns] = values
 df_bid_details.to_csv(
-    '/win/Users/faust/Documents/TCC_MBA/ABM_Project/Results/bid_details001.csv', index=False)
+    '/win/Users/faust/Documents/TCC_MBA/ABM_Project/Results/Details-{}.csv'.format(
+        FILE_NAME), index=False)
 df_bid_results.to_csv(
-    '/win/Users/faust/Documents/TCC_MBA/ABM_Project/Results/bid_results001.csv', index=False)
-# filt = (
-    # df_bid_results['agente'] == 'nobid'
-# )
-# print(df_bid_results.loc[filt, :].pivot_table(index='run', values='pop_alvo',
-                                              # aggfunc=np.sum))
+    '/win/Users/faust/Documents/TCC_MBA/ABM_Project/Results/Results-{}.csv'.format(
+        FILE_NAME), index=False)
+
+end = time.time()
+exec_time = round(end - start, 2)
+print('Execution Time: ' + str(exec_time))

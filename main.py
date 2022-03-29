@@ -13,7 +13,7 @@ df_bid_details = pd.DataFrame()
 df_bid_results = pd.DataFrame()
 
 # Projects Parameters
-BID_ALPHA = 0.9  # Avg that represents amount of discount/overprice of projects
+BID_ALPHA = 1.4  # Avg that represents amount of discount/overprice of projects
 STD_ALPHA = 0.10  # Standard deviation of BID_ALPHA (follows a normal distr.)
 
 # Agents Parameters
@@ -24,7 +24,7 @@ MAX_ALPHA = 1.40  # Max value that agents are willing to go above fair bid price
 ATRAT_RANGE = 0.10
 
 # Governmennt Parameters
-REATIVIDADE = 0  # How much the government is willing to reduce bid price
+REATIVIDADE = 0.2  # How much the government is willing to reduce bid price
 
 # Iteration Parameters
 RUNS = 2000  # Number of iterations
@@ -85,5 +85,5 @@ df_bid_results.to_csv(
         FILE_NAME), index=False)
 
 end = time.time()
-exec_time = round(end - start, 2)
+exec_time = round((end - start)/60, 2)
 print('Execution Time: ' + str(exec_time))

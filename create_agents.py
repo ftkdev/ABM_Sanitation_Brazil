@@ -2,11 +2,16 @@ import pandas as pd
 import numpy as np
 
 
-def create_agents(loc, scale, size, max_alpha):
+def create_agents(loc, scale, size, max_alpha, dist):
     agents_name = list(range(size))
-    tamanho = np.random.normal(loc=loc, scale=scale, size=size)
-    investimento = np.random.normal(loc=loc, scale=scale, size=size)
-    max_alpha = np.random.uniform(1, max_alpha, size=size)
+    if dist == 'g':
+        tamanho = np.random.normal(loc=loc, scale=scale, size=size)
+        investimento = np.random.normal(loc=loc, scale=scale, size=size)
+        max_alpha = np.random.uniform(1, max_alpha, size=size)
+    else:
+        tamanho = np.random.uniform(0, 1, size=size)
+        investimento = np.random.uniform(0, 1, size=size)
+        max_alpha = np.random.uniform(1, max_alpha, size=size)
 
     agents_list = {
         'agente': agents_name,

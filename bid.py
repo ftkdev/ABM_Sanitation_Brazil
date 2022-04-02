@@ -37,8 +37,9 @@ def agents_select(chosen_project, func_agents, atrat_lim):
     pj_atrat_lim = atrat_lim / chosen_project.iloc[0]['bid_alpha']
     # print(pj_atrat_lim)
     filter1 = (
-        (func_agents['ag_atratividade'] > pj_atrat_lim
-        ))
+        (func_agents['ag_atratividade'] > pj_atrat_lim)
+        | (chosen_project.iloc[0]['bid_alpha'] > func_agents['ag_max_alpha'])
+        )
     # print(func_agents.loc[filter1, :])
     func_agents_select = func_agents.drop(func_agents[filter1].index)
     func_agents_select['factor'] = func_agents_select['ag_max_alpha']
@@ -50,12 +51,19 @@ def agents_select(chosen_project, func_agents, atrat_lim):
         # print(func_agents_select.loc[filter2, 'factor'])
         func_agents_select.loc[filter2, 'factor'] = (
             func_agents_select['ag_max_alpha']
-            + (1 - (chosen_project.iloc[0]['bid_alpha'])
-               ))
+            / chosen_project.iloc[0]['bid_alpha']
+               )
+
+    if chosen_project.iloc[0]['bid_alpha'] > 1:
+        func_agents_select['factor'] = (
+            func_agents_select['ag_max_alpha']
+            / chosen_project.iloc[0]['bid_alpha']
+               )
 
     return func_agents_select
 
-def run_bids(func_projects, func_agents_select, bid_number, chosen_project, func_agents, run, reatividade):
+def run_bids(func_projects, func_agents_select, bid_number, chosen_project,
+        func_agents, run, reatividade, reruns):
     # Qualified agents place their bids
     func_agents_select['agente_alpha_ofertado'] = (
         np.random.uniform(1,
@@ -66,10 +74,10 @@ def run_bids(func_projects, func_agents_select, bid_number, chosen_project, func
         (func_agents_select['agente_alpha_ofertado'])
     )
     if func_agents_select.empty is True:
-        if (reatividade > 0) & (chosen_project.iloc[0]['reruns'] < 1):
+        if (reatividade > 0) & (chosen_project.iloc[0]['reruns'] < reruns):
             # Government allows discount
             gov_rebid = government(
-                reatividade, chosen_project, func_projects)
+                reatividade, chosen_project, func_projects, reruns)
             func_projects = gov_rebid[0]
             chosen_project = gov_rebid[1]
 

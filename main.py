@@ -19,7 +19,7 @@ STD_ALPHA = 0.05  # Standard deviation of BID_ALPHA (follows a normal distr.)
 # Agents Parameters
 ATRAT_AVG = 0.50  # Normal distribution for ag_tamanho and ag_investimento
 STD_DEV = 0.25  # Standard deviation of ATRAT_AVG
-NUMBER_OF_AGENTS = 35  # Total number of agents bidding
+NUMBER_OF_AGENTS = 100  # Total number of agents bidding
 MAX_ALPHA = 1.40  # Max value that agents are willing to go above fair bid price
 ATRAT_LIM = 0.3  # Agent flexibility regarding projects selection
 DISTRIBUTION = 'g'  # Type of parameters distribution: 'g' for normal; 'u' for uniform

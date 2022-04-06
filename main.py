@@ -6,26 +6,31 @@ from create_agents import create_agents
 start = time.time()
 
 # Import Projects Database
-excel_projects = pd.read_excel('db.xlsx', sheet_name='Projects')
+excel_projects = pd.read_csv('projects.csv')
+excel_projects.info()
+print(excel_projects)
 
 # Create empty dataframes to be filled with results
 df_bid_details = pd.DataFrame()
 df_bid_results = pd.DataFrame()
 
 # Projects Parameters
-BID_ALPHA = 1  # Avg that represents amount of discount/overprice of projects
-STD_ALPHA = 0.05  # Standard deviation of BID_ALPHA (follows a normal distr.)
+# [Vpj] Avg that represents amount of discount/overprice of projects
+BID_ALPHA = 1
+# [Spj] Standard deviation of BID_ALPHA (follows a normal distr.)
+STD_ALPHA = 0.05
 
-# Agents Parameters
+# Agents Creation Parameters
+NUMBER_OF_AGENTS = 100  # [N] Total number of agents bidding
+# [Mag] Max value that agents are willing to go above fair bid price
+MAX_ALPHA = 1.40
+ATRAT_LIM = 0.3  # [L] Agent flexibility regarding projects selection
 ATRAT_AVG = 0.50  # Normal distribution for ag_tamanho and ag_investimento
 STD_DEV = 0.25  # Standard deviation of ATRAT_AVG
-NUMBER_OF_AGENTS = 100  # Total number of agents bidding
-MAX_ALPHA = 1.40  # Max value that agents are willing to go above fair bid price
-ATRAT_LIM = 0.3  # Agent flexibility regarding projects selection
 DISTRIBUTION = 'g'  # Type of parameters distribution: 'g' for normal; 'u' for uniform
 
 # Governmennt Parameters
-REATIVIDADE = 0  # How much the government is willing to reduce bid price
+REATIVIDADE = 0  # [R] How much the government is willing to reduce bid price
 RERUNS = 1  # How many rebids are allowed
 
 # Iteration Parameters

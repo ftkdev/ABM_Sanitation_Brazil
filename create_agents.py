@@ -3,6 +3,7 @@ import numpy as np
 
 
 def create_agents(loc, scale, size, max_alpha, dist):
+    np.random.seed()
     agents_name = list(range(size))
     if dist == 'g':
         tamanho = np.random.normal(loc=loc, scale=scale, size=size)

@@ -7,8 +7,6 @@ start = time.time()
 
 # Import Projects Database
 excel_projects = pd.read_csv('projects.csv')
-excel_projects.info()
-print(excel_projects)
 
 # Create empty dataframes to be filled with results
 df_bid_details = pd.DataFrame()
@@ -21,16 +19,17 @@ BID_ALPHA = 1
 STD_ALPHA = 0.05
 
 # Agents Creation Parameters
-NUMBER_OF_AGENTS = 100  # [N] Total number of agents bidding
+NUMBER_OF_AGENTS = 25  # [N] Total number of agents bidding
 # [Mag] Max value that agents are willing to go above fair bid price
 MAX_ALPHA = 1.40
 ATRAT_LIM = 0.3  # [L] Agent flexibility regarding projects selection
 ATRAT_AVG = 0.50  # Normal distribution for ag_tamanho and ag_investimento
 STD_DEV = 0.25  # Standard deviation of ATRAT_AVG
-DISTRIBUTION = 'g'  # Type of parameters distribution: 'g' for normal; 'u' for uniform
+DISTRIBUTION = 'g'  # Type of [L] distribution: 'g' for normal; 'u' for uniform
 
 # Governmennt Parameters
-REATIVIDADE = 0  # [R] How much the government is willing to reduce bid price
+# [R] How much the government is willing to reduce bid price
+REATIVIDADE = 0.4
 RERUNS = 1  # How many rebids are allowed
 
 # Iteration Parameters
@@ -107,9 +106,7 @@ df_pivot = df_bid_results.loc[filter_pivot, :].pivot_table(index='run',
 # print(df_pivot)
 print(df_pivot.mean())
 
-
 df_pivot2 = df_bid_results.pivot_table(index='run',
                                        values='bid',
                                        aggfunc=np.sum)
-
 print(df_pivot2.mean())

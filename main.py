@@ -71,7 +71,7 @@ for run in range(RUNS):
                       'bid_number', 'reruns', 'run']])
 
 # Export Final Databases
-FILE_NAME = 'PJ-{}-{}-AG-{}-{}-{}-{}-{}-{}-GV-{}-{}-IT-{}'.format(
+FILE_NAME = 'Vpj{:.2f}Spj{:.2f}Vag{:.2f}Sag{:.2f}N{:0>3d}Mag{:.2f}L{:.2f}D{}R{:.2f}T{:0>2d}It{:0>4d}'.format(
     BID_ALPHA, STD_ALPHA, ATRAT_AVG, STD_DEV, NUMBER_OF_AGENTS,
     MAX_ALPHA, ATRAT_LIM, DISTRIBUTION, REATIVIDADE, RERUNS, RUNS
 )

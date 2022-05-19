@@ -5,6 +5,7 @@ from government import government
 
 
 def projects_index(bid_alpha, std_alpha, func_projects):
+    # np.random.seed(0)
     func_projects['bid_alpha'] = (
         np.random.normal(bid_alpha, std_alpha,
                          size=len(func_projects))
@@ -67,6 +68,7 @@ def agents_select(chosen_project, func_agents, atrat_lim):
 
 def run_bids(func_projects, func_agents_select, bid_number, chosen_project,
              func_agents, run, reatividade, reruns):
+    # np.random.seed(0)
     # Qualified agents place their bids
     func_agents_select['agente_alpha_ofertado'] = (
         np.random.uniform(1,

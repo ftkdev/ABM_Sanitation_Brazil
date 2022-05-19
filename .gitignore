@@ -1,4 +1,6 @@
 backup/
 Results/
 Results_temp/
+Notebooks/Others/
 *.xlsx
+main.py

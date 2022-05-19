@@ -3,7 +3,7 @@ import numpy as np
 
 
 def create_agents(loc, scale, size, max_alpha, dist):
-    np.random.seed()
+    # np.random.seed(0)
     agents_name = list(range(size))
     if dist == 'g':
         tamanho = np.random.normal(loc=loc, scale=scale, size=size)
@@ -24,6 +24,6 @@ def create_agents(loc, scale, size, max_alpha, dist):
     return df_agents_listao
 
 
-# teste = create_agents(0.5, 0.25, 15, 1.41, 'g')
-# print(teste)
+teste = create_agents(0.5, 0.25, 15, 1.41, 'g')
+print(teste)
 # teste.to_excel('agents_example.xlsx', index=False)
